@@ -1,6 +1,6 @@
 # Stoat Platform — Self-Hosting on Kubernetes
 
-Self-host [Stoat](https://github.com/stoatchat) on Kubernetes using Helmfile.
+Self-host [Stoatchat](https://github.com/stoatchat) on Kubernetes using Helmfile.
 
 > **Looking for something simpler?** The official
 > [self-hosted Docker Compose](https://github.com/stoatchat/self-hosted)
@@ -56,7 +56,7 @@ namespaces via Reflector.
 ## Quick Start
 
 ```bash
-git clone <this-repo> && cd stoat-platform
+git clone git@github.com:baptisterajaut/stoatchat-platform.git && cd stoatchat-platform
 
 # 1. Generate configuration and deploy
 ./init.sh

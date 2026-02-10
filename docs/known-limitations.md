@@ -1,6 +1,6 @@
 # Known Limitations
 
-Current gotchas and limitations of the stoat-platform deployment.
+Current gotchas and limitations of the stoatchat-platform deployment.
 
 ## HAProxy annotation mismatch
 

@@ -1,7 +1,7 @@
 # Architecture Decisions
 
 This document records the key architecture decisions made for the
-stoat-platform Helmfile deployment and the reasoning behind them.
+stoatchat-platform Helmfile deployment and the reasoning behind them.
 
 ## Helmfile structure from lasuite-platform
 
