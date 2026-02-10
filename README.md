@@ -248,21 +248,23 @@ env vars, and serves via nginx with runtime `sed` replacement at startup.
 Build and push:
 
 ```bash
-# Default (main branch)
-docker/client/build.sh
+# Please set a custom image name (default: baptisterajaut/stoatchat-web)
+STOATCHAT_WEBCLIENT_IMAGE_PUBLISHNAME=myuser/stoatchat-web docker/client/build.sh
 
-# Specific ref
-STOATCHAT_WEB_REF=v1.0.0 docker/client/build.sh
+
+# Specific ref (dev by default)
+STOATCHAT_WEBCLIENT_IMAGE_PUBLISHNAME=myuser/stoatchat-web STOATCHAT_WEB_REF=v1.0.0 docker/client/build.sh
 
 # Custom tag
-docker/client/build.sh v1.0.0
+STOATCHAT_WEBCLIENT_IMAGE_PUBLISHNAME=myuser/stoatchat-web STOATCHAT_WEB_REF=v1.0.0 docker/client/build.sh v1.0.0
+
 ```
 
 The script auto-detects `nerdctl` or `docker` and prompts before pushing.
 
 > PR [stoatchat/for-web#522](https://github.com/stoatchat/for-web/pull/522)
-> tracks an official upstream Dockerfile. It won't include runtime env
-> replacement, so this custom build remains necessary for self-hosting.
+> tracks an official upstream Dockerfile. It doesn't seem to include runtime
+> env replacement so far, so this custom build remains necessary for self-hosting in the meantime.
 
 ## Access
 
