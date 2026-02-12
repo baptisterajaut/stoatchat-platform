@@ -11,14 +11,10 @@ volumes:
   stoatchat-rabbitmq-data:
     host_path: rabbitmq
 exclude:
-- cert-manager-cainjector
-- cert-manager
-- cert-manager-webhook
-- haproxy-ingress-kubernetes-ingress
+- cert-manager*
+- haproxy-ingress*
 - reflector
 replacements:
-- old: http://livekit-livekit-server
-  new: http://livekit-livekit-server:7880
 - old: path_style_buckets = false
   new: path_style_buckets = true
 services:
@@ -42,3 +38,7 @@ overrides:
     volumes:
     - $volume_root/redis:/data
     environment: null
+  livekit-livekit-server:
+    ports:
+    - 7881:7881/tcp
+    - 50000-50100:50000-50100/udp

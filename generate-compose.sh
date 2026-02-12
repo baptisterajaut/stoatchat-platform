@@ -11,8 +11,9 @@ cd "$SCRIPT_DIR"
 # Reuse helpers from init.sh (generate_seed, generate_vapid, generate_files_key, derive_secret, read_seed)
 source "$SCRIPT_DIR/init.sh"
 
-H2C_VERSION="v1.0.0"
+H2C_VERSION="v1.1.0"
 H2C_URL="https://raw.githubusercontent.com/baptisterajaut/helmfile2compose/${H2C_VERSION}/helmfile2compose.py"
+H2C_SCRIPT="$(mktemp /tmp/helmfile2compose.XXXXXX.py)"
 RENDERED_DIR="generated-platform"
 
 # ---------------------------------------------------------------------------
@@ -35,10 +36,9 @@ fi
 # Download helmfile2compose.py
 # ---------------------------------------------------------------------------
 
-if [[ ! -f helmfile2compose.py ]]; then
-    echo "Downloading helmfile2compose.py (${H2C_VERSION})..."
-    curl -fsSL "$H2C_URL" -o helmfile2compose.py
-fi
+echo "Downloading helmfile2compose.py (${H2C_VERSION})..."
+curl -fsSL "$H2C_URL" -o "$H2C_SCRIPT"
+trap 'rm -f "$H2C_SCRIPT"' EXIT
 
 # ---------------------------------------------------------------------------
 # Setup: environments/compose.yaml (domain, voice, secrets)
@@ -122,7 +122,7 @@ helmfile -e compose template --output-dir "$RENDERED_DIR"
 
 echo "Generating compose.yml..."
 rm -rf configmaps/ secrets/
-python3 helmfile2compose.py --from-dir "$RENDERED_DIR" --output-dir .
+python3 "$H2C_SCRIPT" --from-dir "$RENDERED_DIR" --output-dir .
 
 # ---------------------------------------------------------------------------
 # Summary
