@@ -70,15 +70,6 @@ helmfile -e local sync
 kubectl rollout restart deployment -n stoatchat
 ```
 
-## Client image pull policy
-
-The client image uses tag `dev` (mutable) and `imagePullPolicy: Always` to
-ensure the latest build is always pulled. Other Stoatchat services use immutable
-GHCR tags with `IfNotPresent`.
-
-If you switch the client to an immutable tag, you can change the pull policy
-to `IfNotPresent` to avoid unnecessary pulls.
-
 ## LiveKit host network
 
 LiveKit requires host-network access for WebRTC media transport. The
@@ -101,16 +92,38 @@ submodule dependencies, making it impractical for self-hosting.
 Administrative tasks (user management, instance configuration) must be done
 directly via the API or MongoDB.
 
-## Gifbox (GIF picker)
+## Web client (`for-web`) upstream issues
 
-The GIF picker in the modern client (`for-web`) is hardcoded to call the
-official Stoatchat gifbox instance — not the self-hosted proxy. Deploying
-`gifbox` locally is therefore useless: the client ignores it entirely.
+These are upstream limitations in the `for-web` codebase, not deployment issues.
 
-The GIF button cannot be hidden or disabled from the client UI, and there
-is no client-side setting to point it at a custom gifbox URL.
+### No video/screen sharing
+
+The video and screen share buttons in voice calls are hardcoded as disabled
+in `VoiceCallCardActions.tsx` with a `"Coming soon! 👀"` tooltip. There is no
+feature flag — both buttons have `isDisabled` set directly. Only text chat and
+voice audio work.
+
+### GIF picker cannot be disabled
+
+The GIF picker calls the official Stoatchat gifbox instance (`api.gifbox.me`)
+— not any self-hosted proxy. Deploying `gifbox` locally is useless: the client
+ignores it entirely.
+
+A `gif_picker` experiment is defined in `Experiments.ts` but is **never
+checked** before rendering the picker. The GIF button is always visible
+regardless of the experiment's state. There is no client-side setting to hide
+it or point it at a custom gifbox URL.
 
 `apps.gifbox.enabled` is set to `false` by default for this reason.
+
+### Image pull policy
+
+The client image uses tag `dev` (mutable) and `imagePullPolicy: Always` to
+ensure the latest build is always pulled. Other Stoatchat services use immutable
+GHCR tags with `IfNotPresent`.
+
+If you switch the client to an immutable tag, you can change the pull policy
+to `IfNotPresent` to avoid unnecessary pulls.
 
 ## Voice upstream status
 
