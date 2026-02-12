@@ -18,6 +18,16 @@ replacements:
 - old: path_style_buckets = false
   new: path_style_buckets = true
 services:
+  fix-permissions:
+    image: busybox
+    restart: "no"
+    user: "0"
+    command:
+    - sh
+    - -c
+    - chown -R 1001 /data/mongodb
+    volumes:
+    - $volume_root/mongodb:/data/mongodb
   minio-init:
     image: quay.io/minio/mc:RELEASE.2024-11-21T17-21-54Z
     restart: on-failure
