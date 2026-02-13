@@ -96,12 +96,13 @@ directly via the API or MongoDB.
 
 These are upstream limitations in the `for-web` codebase, not deployment issues.
 
-### No video/screen sharing
+### Video/screen sharing (experimental)
 
-The video and screen share buttons in voice calls are hardcoded as disabled
-in `VoiceCallCardActions.tsx` with a `"Coming soon! 👀"` tooltip. There is no
-feature flag — both buttons have `isDisabled` set directly. Only text chat and
-voice audio work.
+Video and screen sharing are disabled in the upstream `for-web` client
+(hardcoded `isDisabled` in `VoiceCallCardActions.tsx`). The default
+`build.conf` uses a non-mainline patch (`Dadadah/stoat-for-web`,
+branch `patch/enablevideo`) that re-enables these buttons. This is
+experimental and may break with upstream updates (if it works at all)
 
 ### GIF picker cannot be disabled
 

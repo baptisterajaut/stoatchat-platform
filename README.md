@@ -248,19 +248,31 @@ for self-hosting (upstream bakes env vars at build time). A custom
 Dockerfile in `docker/client/` clones the repo, builds with placeholder
 env vars, and serves via nginx with runtime `sed` replacement at startup.
 
+Build settings are in `docker/client/build.conf`:
+
+```bash
+WEB_REPO="https://github.com/Dadadah/stoat-for-web"   # web client git repo
+WEB_REF="patch/enablevideo"                            # branch or tag to build
+ASSETS_REPO="https://github.com/stoatchat/assets.git"  # assets git repo
+WEB_IMAGE="baptisterajaut/stoatchat-web"               # destination image name
+```
+
 Build and push:
 
 ```bash
-# Please set a custom image name (default: baptisterajaut/stoatchat-web)
-STOATCHAT_WEBCLIENT_IMAGE_PUBLISHNAME=myuser/stoatchat-web docker/client/build.sh
+# Uses values from build.conf
+docker/client/build.sh
 
+# Custom tag (first argument, default: dev)
+docker/client/build.sh v1.0.0
+```
 
-# Specific ref (dev by default)
-STOATCHAT_WEBCLIENT_IMAGE_PUBLISHNAME=myuser/stoatchat-web STOATCHAT_WEB_REF=v1.0.0 docker/client/build.sh
+Environment variables still override `build.conf` for CI usage:
 
-# Custom tag
-STOATCHAT_WEBCLIENT_IMAGE_PUBLISHNAME=myuser/stoatchat-web STOATCHAT_WEB_REF=v1.0.0 docker/client/build.sh v1.0.0
-
+```bash
+STOATCHAT_WEBCLIENT_IMAGE_PUBLISHNAME=myuser/stoatchat-web \
+  STOATCHAT_WEB_REF=v1.0.0 \
+  docker/client/build.sh v1.0.0
 ```
 
 The script auto-detects `nerdctl` or `docker` and prompts before pushing.

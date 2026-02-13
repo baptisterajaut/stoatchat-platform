@@ -29,13 +29,15 @@ RUN corepack enable && corepack prepare pnpm@10.10.0 --activate
 
 WORKDIR /app
 
+ARG STOATCHAT_WEB_REPO=https://github.com/stoatchat/for-web
 ARG STOATCHAT_WEB_REF=main
+ARG STOATCHAT_ASSETS_REPO=https://github.com/stoatchat/assets.git
 ARG CACHE_BUST=1
 RUN git clone --branch ${STOATCHAT_WEB_REF} --recurse-submodules \
-    https://github.com/stoatchat/for-web.git .
+    ${STOATCHAT_WEB_REPO} .
 # Assets submodule uses SSH in .gitmodules; clone via HTTPS separately
 RUN rm -rf packages/client/assets && \
-    git clone --depth 1 https://github.com/stoatchat/assets.git packages/client/assets
+    git clone --depth 1 ${STOATCHAT_ASSETS_REPO} packages/client/assets
 
 # Placeholders replaced at runtime by entrypoint.sh
 ENV VITE_API_URL=__VITE_API_URL__
