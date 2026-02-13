@@ -153,6 +153,7 @@ Primary configuration file. Created from `local.yaml.example` by `init.sh`.
 | `domain` | `stoatchat.local` | Base domain for all services |
 | `secretSeed` | (generated) | Master seed for deterministic secret derivation |
 | `apps.<name>.enabled` | `true`/`false` | Toggle individual services |
+| `apps.api.webhooks` | `true` | Enable incoming webhooks (upstream defaults to `false`) |
 | `apps.gifbox.tenorKey` | `""` | Tenor API key — required when gifbox is enabled ([get one](https://developers.google.com/tenor)) |
 | `livekit.enabled` | `false` | Enable LiveKit voice/video (requires extra config) |
 | `livekit.rtcPortRangeStart` | `50000` | First UDP port for WebRTC media |
@@ -173,6 +174,16 @@ apps:
     tenorKey: "your-tenor-api-key"   # required when gifbox is enabled
   voiceIngress:
     enabled: true     # enable after livekit is enabled
+```
+
+### Webhooks
+
+Webhooks are **enabled by default** (`apps.api.webhooks: true`). This diverges from upstream Stoatchat, which defaults to `false` — there may be a reason for that we're not aware of, so disable them if you run into issues:
+
+```yaml
+apps:
+  api:
+    webhooks: false
 ```
 
 ### LiveKit (voice/video)

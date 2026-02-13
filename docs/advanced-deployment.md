@@ -11,6 +11,7 @@ This guide explains how to deploy Stoatchat with existing infrastructure (MongoD
 - [Using an Existing RabbitMQ](#using-an-existing-rabbitmq)
 - [Using an Existing S3](#using-an-existing-s3)
 - [Using an Existing LiveKit](#using-an-existing-livekit)
+- [Webhooks](#webhooks)
 - [Production Deployment](#production-deployment)
 - [Troubleshooting](#troubleshooting)
 
@@ -299,6 +300,22 @@ secretOverrides:
   livekit-key: "your_api_key"
   livekit-secret: "your_api_secret"
 ```
+
+---
+
+## Webhooks
+
+Webhooks are enabled by default. Upstream Stoatchat defaults to `false` — there may be a reason for that we're not aware of. If you experience issues, disable them in your environment file:
+
+```yaml
+apps:
+  api:
+    webhooks: false
+```
+
+A commented-out line is already present in `remote.yaml.example` for quick toggling.
+
+If you know why upstream defaults to disabled, please open an issue or a PR to change the default behaviour.
 
 ---
 

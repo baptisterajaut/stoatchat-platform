@@ -84,3 +84,6 @@ data:
     access_key_id = "{{ include "getSecret" (dict "seed" .Values.secretSeed "clientId" "s3-access" "overrides" .Values.secretOverrides) }}"
     secret_access_key = "{{ include "getSecret" (dict "seed" .Values.secretSeed "clientId" "s3-secret" "overrides" .Values.secretOverrides) }}"
     default_bucket = "{{ .Values.s3.defaultBucket }}"
+
+    [features]
+    webhooks_enabled = {{ .Values.apps.api.webhooks }}

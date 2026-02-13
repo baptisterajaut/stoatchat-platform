@@ -119,6 +119,10 @@ livekit:
 
 Then re-run `./generate-compose.sh && docker compose up -d`.
 
+### Webhooks
+
+Webhooks are enabled by default. See [Webhooks](../README.md#webhooks) for details and how to disable.
+
 ### SMTP
 
 Without SMTP, email verification is skipped and accounts are immediately

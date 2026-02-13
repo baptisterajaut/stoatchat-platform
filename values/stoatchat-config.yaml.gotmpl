@@ -55,6 +55,10 @@ vapid:
 files:
   encryptionKey: {{ .Values.files.encryptionKey | default "" | quote }}
 
+apps:
+  api:
+    webhooks: {{ if .Values.apps.api.enabled }}{{ if hasKey .Values.apps.api "webhooks" }}{{ .Values.apps.api.webhooks }}{{ else }}true{{ end }}{{ else }}false{{ end }}
+
 ingress:
   className: {{ .Values.ingress.className }}
 

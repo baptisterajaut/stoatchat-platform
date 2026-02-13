@@ -3,6 +3,7 @@ domain: __DOMAIN__
 apps:
   api:
     enabled: true
+    # webhooks: false  # disable if you have issues with webhooks
   events:
     enabled: true
   fileServer:
