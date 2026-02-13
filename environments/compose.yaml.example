@@ -21,8 +21,16 @@ certManager:
 reflector:
   enabled: false
 
+# SMTP (disabled by default — no email verification)
 smtp:
+  host: ""
+  port: 25
+  username: ""
+  password: ""
   fromAddress: "noreply@__DOMAIN__"
+  replyTo: ""
+  useTls: false
+  useStarttls: false
 
 # Generate with: openssl rand -hex 24
 secretSeed: "__SECRET_SEED__"

@@ -11,6 +11,30 @@ cd "$SCRIPT_DIR"
 # Reuse helpers from init.sh (generate_seed, generate_vapid, generate_files_key, derive_secret, read_seed)
 source "$SCRIPT_DIR/init.sh"
 
+TEMPLATE_CHECK=true
+for arg in "$@"; do
+    [[ "$arg" == "--no-template-check" ]] && TEMPLATE_CHECK=false
+done
+
+# Warn if a generated file has drifted from its template (line count comparison)
+check_template_drift() {
+    local generated="$1" template="$2"
+    [[ "$TEMPLATE_CHECK" == false ]] && return
+    [[ ! -f "$generated" || ! -f "$template" ]] && return
+    local gen_lines tpl_lines
+    gen_lines=$(wc -l < "$generated")
+    tpl_lines=$(wc -l < "$template")
+    if [[ "$gen_lines" -ne "$tpl_lines" ]]; then
+        echo ""
+        echo "⚠ Template drift: $generated ($gen_lines lines) differs from $template ($tpl_lines lines)."
+        echo "  The template may have new options since you generated your file."
+        echo "  Compare them:  diff $generated $template"
+        echo "  Use --no-template-check to suppress this warning."
+        read -rp "  Press Enter to continue..."
+        echo ""
+    fi
+}
+
 H2C_VERSION="v1.2.1"
 H2C_URL="https://raw.githubusercontent.com/baptisterajaut/helmfile2compose/${H2C_VERSION}/helmfile2compose.py"
 H2C_SCRIPT="$(mktemp /tmp/helmfile2compose.XXXXXX.py)"
@@ -76,6 +100,8 @@ if [[ ! -f environments/compose.yaml ]]; then
     generate_files_key
 
     echo ""
+else
+    check_template_drift environments/compose.yaml environments/compose.yaml.example
 fi
 
 # ---------------------------------------------------------------------------
@@ -106,6 +132,8 @@ if [[ ! -f helmfile2compose.yaml ]]; then
     mkdir -p "${DATA_ROOT}"/{mongodb,redis,rabbitmq,minio}
 
     echo ""
+else
+    check_template_drift helmfile2compose.yaml helmfile2compose.yaml.template
 fi
 
 # ---------------------------------------------------------------------------

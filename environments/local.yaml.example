@@ -1,7 +1,15 @@
 domain: stoatchat.local
 
+# SMTP (disabled by default — no email verification)
 smtp:
+  host: ""
+  port: 25
+  username: ""
+  password: ""
   fromAddress: "noreply@stoatchat.local"
+  replyTo: ""
+  useTls: false
+  useStarttls: false
 
 # Generate with: openssl rand -hex 24
 secretSeed: ""

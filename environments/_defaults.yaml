@@ -68,13 +68,6 @@ tls:
   issuer: selfsigned
   secretName: stoatchat-tls
 
-# SMTP (disabled by default)
+# SMTP — disabled by default. Full config in environment templates.
 smtp:
   host: ""
-  port: 25
-  username: ""
-  password: ""
-  fromAddress: ""
-  replyTo: ""
-  useTls: false
-  useStarttls: false
