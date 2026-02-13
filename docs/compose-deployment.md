@@ -1,25 +1,21 @@
 # Deploy with Docker Compose
 
 Run Stoatchat without a Kubernetes cluster. The `generate-compose.sh` script
-converts the same Helmfile charts into a `compose.yml` + `Caddyfile`, using
-[helmfile2compose](https://github.com/baptisterajaut/helmfile2compose).
+converts the same Helmfile output into a `compose.yml` + `Caddyfile`, using
+the unholy script [helmfile2compose](https://github.com/baptisterajaut/helmfile2compose).
 
 ## What you need
 
-- A Unix terminal (Linux, macOS, WSL)
-- Docker or a compatible runtime (`nerdctl`, `podman`)
+- Docker or a compatible runtime (`nerdctl`, `podman`) with compose support
 - [Helm](https://helm.sh/) v3 and [Helmfile](https://github.com/helmfile/helmfile) v0.169+
 - Python 3 with `pyyaml` (`pip install pyyaml`)
 - `openssl`
-- No Kubernetes cluster, no Kubernetes knowledge
 
 > **Bind mount permissions:** MongoDB (Bitnami) runs as UID 1001 and may fail with `permission denied` on host-mounted data directories owned by your user (UID 1000). This is handled automatically on first run.
 
-> **Windows note:** native Windows (PowerShell / cmd) is not supported.
-> Use WSL 2 with Docker Desktop's WSL backend. Running the generation
-> toolchain directly on Windows is possible in theory but fragile — shell
-> scripts, `openssl`, Python, and Helm all need to be installed and
-> behave identically to their Unix counterparts, which is rarely the case.
+> **Windows:** native Windows (PowerShell / cmd) is not supported. Use WSL 2 with Docker Desktop's WSL backend.
+
+> **Docker Desktop:** fine for testing, not recommended beyond that. LiveKit (WebRTC) has been reported to fail with "ICE failed" errors under Docker Desktop — likely related to the NAT/bridge layer between the VM and the host. For anything beyond testing, deploy on bare metal, a dedicated server, or a VPS with its own public IP.
 
 ## Quick start
 
