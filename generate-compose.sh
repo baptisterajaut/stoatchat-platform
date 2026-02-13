@@ -22,8 +22,8 @@ check_template_drift() {
     [[ "$TEMPLATE_CHECK" == false ]] && return
     [[ ! -f "$generated" || ! -f "$template" ]] && return
     local gen_lines tpl_lines
-    gen_lines=$(wc -l < "$generated")
-    tpl_lines=$(wc -l < "$template")
+    gen_lines=$(wc -l < "$generated" | tr -d ' ')
+    tpl_lines=$(wc -l < "$template" | tr -d ' ')
     if [[ "$gen_lines" -ne "$tpl_lines" ]]; then
         echo ""
         echo "⚠ Template drift: $generated ($gen_lines lines) differs from $template ($tpl_lines lines)."
