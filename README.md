@@ -1,24 +1,10 @@
 # StoatChat Platform
 
-Self-host [Stoatchat](https://github.com/stoatchat) on Kubernetes using
-Helmfile, or on a single machine with Docker Compose.
+Self-host [Stoatchat](https://github.com/stoatchat) on Kubernetes using Helmfile. The same charts also generate a Docker Compose setup for single-machine deployments — one source of truth for all targets.
 
 > **No Kubernetes cluster?** See [Deploy with Compose](docs/compose-deployment.md).
-> The official Docker Compose setup is
-> [stoatchat/self-hosted](https://github.com/stoatchat/self-hosted).
 
-The [official self-hosted repo](https://github.com/stoatchat/self-hosted/issues/176)
-is awaiting updates, so as
-[suggested there](https://github.com/stoatchat/self-hosted/issues/176#issuecomment-2668227771)
-I built this Helmfile alternative while deploying my own instance. The same
-charts work for local development, production clusters, and
-[Compose generation](docs/compose-deployment.md) — one source of truth
-for all deployment targets.
-
-This is a **reference implementation**: monitoring, GitOps, and security
-policies are left to operators. Architecture and tooling adapted from
-[lasuite-platform](https://github.com/baptisterajaut/lasuite-platform)
-(La Suite Numérique).
+The [official self-hosted repo](https://github.com/stoatchat/self-hosted/issues/176) is awaiting updates, so I built this Helmfile alternative [as suggested there](https://github.com/stoatchat/self-hosted/issues/176#issuecomment-2668227771). This is a **reference implementation** — monitoring, GitOps, and security policies are left to operators. Architecture adapted from [lasuite-platform](https://github.com/baptisterajaut/lasuite-platform) (La Suite Numérique).
 
 ## Architecture
 

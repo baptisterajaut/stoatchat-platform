@@ -11,7 +11,7 @@ cd "$SCRIPT_DIR"
 # Reuse helpers from init.sh (generate_seed, generate_vapid, generate_files_key, derive_secret, read_seed)
 source "$SCRIPT_DIR/init.sh"
 
-H2C_VERSION="v1.1.0"
+H2C_VERSION="v1.2.0"
 H2C_URL="https://raw.githubusercontent.com/baptisterajaut/helmfile2compose/${H2C_VERSION}/helmfile2compose.py"
 H2C_SCRIPT="$(mktemp /tmp/helmfile2compose.XXXXXX.py)"
 RENDERED_DIR="generated-platform"

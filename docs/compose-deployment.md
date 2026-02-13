@@ -13,7 +13,7 @@ converts the same Helmfile charts into a `compose.yml` + `Caddyfile`, using
 - `openssl`
 - No Kubernetes cluster, no Kubernetes knowledge
 
-> **Bind mount permissions:** MongoDB (Bitnami) runs as UID 1001 and may fail with `permission denied` on host-mounted data directories owned by your user (UID 1000). This is handled automatically by an init container on first run.
+> **Bind mount permissions:** MongoDB (Bitnami) runs as UID 1001 and may fail with `permission denied` on host-mounted data directories owned by your user (UID 1000). This is handled automatically on first run.
 
 > **Windows note:** native Windows (PowerShell / cmd) is not supported.
 > Use WSL 2 with Docker Desktop's WSL backend. Running the generation
