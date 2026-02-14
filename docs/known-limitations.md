@@ -2,18 +2,6 @@
 
 Current gotchas and limitations of the stoatchat-platform deployment.
 
-## HAProxy annotation mismatch
-
-The haproxytech/kubernetes-ingress controller uses `haproxy.org/*`
-annotations. The community haproxy-ingress project uses
-`haproxy-ingress.github.io/*`. These are two separate projects with
-incompatible annotation prefixes.
-
-Using the wrong prefix is **silently ignored** — no error, no warning,
-the rewrite simply doesn't happen. If path-based routing stops stripping
-prefixes, check that annotations use `haproxy.org/path-rewrite` (not
-`haproxy-ingress.github.io/rewrite-target`).
-
 ## Client PWA service worker
 
 The for-web client ships a service worker that precaches ~380 JS assets.

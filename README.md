@@ -153,7 +153,7 @@ Primary configuration file. Created from `local.yaml.example` by `init.sh`.
 | `secretSeed` | (generated) | Master seed for deterministic secret derivation |
 | `apps.<name>.enabled` | `true`/`false` | Toggle individual services |
 | `apps.api.webhooks` | `true` | Enable incoming webhooks (upstream defaults to `false`) |
-| `apps.gifbox.tenorKey` | `""` | Tenor API key — required when gifbox is enabled ([get one](https://developers.google.com/tenor)) |
+| `apps.gifbox.tenorKey` | `""` | Tenor API key (see [known limitation](docs/known-limitations.md#gif-picker-cannot-be-disabled) — gifbox is currently unusable in self-hosted) |
 | `livekit.enabled` | `false` | Enable LiveKit voice/video (requires extra config) |
 | `livekit.rtcPortRangeStart` | `50000` | First UDP port for WebRTC media |
 | `livekit.rtcPortRangeEnd` | `60000` | Last UDP port for WebRTC media |
@@ -162,15 +162,12 @@ Primary configuration file. Created from `local.yaml.example` by `init.sh`.
 
 ### App toggles
 
-All apps default to enabled except `gifbox` (requires a
-[Tenor API key](https://developers.google.com/tenor)),
-`voiceIngress` (requires LiveKit), and `livekit` itself:
+All apps default to enabled except `gifbox`, `voiceIngress` (requires LiveKit), and `livekit` itself.
+
+> **Note**: `gifbox` is disabled by default and should stay that way. The client uses the official Stoatchat gifbox instance (`api.gifbox.me`) regardless of whether a local gifbox is deployed. See [known limitations](docs/known-limitations.md#gif-picker-cannot-be-disabled).
 
 ```yaml
 apps:
-  gifbox:
-    enabled: true
-    tenorKey: "your-tenor-api-key"   # required when gifbox is enabled
   voiceIngress:
     enabled: true     # enable after livekit is enabled
 ```

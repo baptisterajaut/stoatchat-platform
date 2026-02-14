@@ -4,6 +4,7 @@ This guide explains how to deploy Stoatchat with existing infrastructure (MongoD
 
 ## Table of Contents
 
+- [Ingress Controller](#ingress-controller)
 - [How Secrets Work](#how-secrets-work)
 - [Using Custom Secrets](#using-custom-secrets)
 - [Using an Existing MongoDB](#using-an-existing-mongodb)
@@ -14,6 +15,14 @@ This guide explains how to deploy Stoatchat with existing infrastructure (MongoD
 - [Webhooks](#webhooks)
 - [Production Deployment](#production-deployment)
 - [Troubleshooting](#troubleshooting)
+
+---
+
+## Ingress Controller
+
+**Only HAProxy is supported as an ingress controller.** All Ingress resources use `haproxy.org/*` annotations. Disabling the bundled HAProxy deployment is supported (`ingress.enabled: false`), but the annotations on all Ingress manifests remain HAProxy-specific.
+
+If you want to use a different ingress controller (nginx, Traefik, etc.), fork the repository and replace all HAProxy annotations with your controller's equivalents. No support will be provided for any controller other than HAProxy.
 
 ---
 
@@ -360,7 +369,7 @@ certManager:
   enabled: true   # false if already installed in your cluster
 
 ingress:
-  className: haproxy  # adapt to your cluster
+  className: haproxy  # only supported controller — see Ingress Controller section
 
 smtp:
   host: smtp.example.com  # Required for email verification
