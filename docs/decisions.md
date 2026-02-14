@@ -62,10 +62,6 @@ resources sharing the same host (`stoatchat.local`) into a single frontend.
 Path prefix stripping uses `haproxy.org/path-rewrite` (haproxytech
 annotation). Services mapped to `/` (the client) get no rewrite annotation.
 
-The haproxytech and community haproxy-ingress projects use incompatible
-annotation prefixes — see
-[Known limitations](known-limitations.md#haproxy-annotation-mismatch).
-
 ## Namespace split
 
 Infrastructure and application services are isolated in separate namespaces,
@@ -73,9 +69,9 @@ matching the lasuite-platform pattern:
 
 | Namespace | Contents |
 |-----------|----------|
-| `stoatchat-cert-manager` | cert-manager |
-| `stoatchat-ingress` | HAProxy Ingress controller |
-| `stoatchat-reflector` | Reflector |
+| `cert-manager` | cert-manager |
+| `haproxy-controller` | HAProxy Ingress controller |
+| `reflector` | Reflector |
 | `stoatchat-mongodb` | MongoDB |
 | `stoatchat-redis` | Redis |
 | `stoatchat-rabbitmq` | RabbitMQ |

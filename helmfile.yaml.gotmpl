@@ -66,7 +66,7 @@ releases:
   # CERT-MANAGER
   # -------------------------------------------
   - name: cert-manager
-    namespace: stoatchat-cert-manager
+    namespace: cert-manager
     chart: jetstack/cert-manager
     version: {{ .Values.infraChartVersions.certManager | quote }}
     condition: certManager.enabled
@@ -79,7 +79,7 @@ releases:
   # HAPROXY INGRESS CONTROLLER
   # -------------------------------------------
   - name: haproxy-ingress
-    namespace: stoatchat-ingress
+    namespace: haproxy-controller
     chart: haproxytech/kubernetes-ingress
     version: {{ .Values.infraChartVersions.haproxy | quote }}
     condition: ingress.enabled
@@ -92,7 +92,7 @@ releases:
   # REFLECTOR
   # -------------------------------------------
   - name: reflector
-    namespace: stoatchat-reflector
+    namespace: reflector
     chart: emberstack/reflector
     version: {{ .Values.infraChartVersions.reflector | quote }}
     condition: reflector.enabled
@@ -176,10 +176,10 @@ releases:
     chart: ./helm/stoatchat-config
     needs:
       {{- if .Values.certManager.enabled }}
-      - stoatchat-cert-manager/cert-manager
+      - cert-manager/cert-manager
       {{- end }}
       {{- if .Values.reflector.enabled }}
-      - stoatchat-reflector/reflector
+      - reflector/reflector
       {{- end }}
     labels:
       category: configuration

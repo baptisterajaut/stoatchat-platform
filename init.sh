@@ -76,7 +76,7 @@ post_deploy() {
     echo "Waiting for LoadBalancer IP..."
     LB_IP=""
     for _ in {1..30}; do
-        LB_IP=$(kubectl get svc haproxy-ingress-kubernetes-ingress -n stoatchat-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || true)
+        LB_IP=$(kubectl get svc haproxy-ingress-kubernetes-ingress -n haproxy-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || true)
         if [[ -n "${LB_IP}" ]]; then
             break
         fi
@@ -96,7 +96,7 @@ post_deploy() {
 
     # Extract CA certificate for self-signed setups
     CA_FILE="${SCRIPT_DIR}/stoatchat-ca.pem"
-    kubectl get secret stoatchat-ca-secret -n stoatchat-cert-manager -o jsonpath='{.data.tls\.crt}' | base64 -d > "${CA_FILE}" 2>/dev/null || true
+    kubectl get secret stoatchat-ca-secret -n cert-manager -o jsonpath='{.data.tls\.crt}' | base64 -d > "${CA_FILE}" 2>/dev/null || true
     if [[ -s "${CA_FILE}" ]]; then
         echo ""
         echo "CA certificate saved to: ${CA_FILE}"

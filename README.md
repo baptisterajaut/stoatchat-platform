@@ -4,6 +4,8 @@ Self-host [Stoatchat](https://github.com/stoatchat) on Kubernetes using Helmfile
 
 > **No Kubernetes cluster?** See [Deploy with Compose](docs/compose-deployment.md).
 
+> **Breaking change (14 February 2026):** cert-manager, Reflector and HAProxy have moved to non-prefixed namespaces (`cert-manager`, `reflector`, `haproxy-controller`). They should never have had `stoatchat-` in their namespace names — these are cluster-wide components. See [migration guide](docs/migrate-namespaces.md). (This doesn't impact docker-compose users)
+
 The [official self-hosted repo](https://github.com/stoatchat/self-hosted/issues/176) is awaiting updates, so I built this Helmfile alternative [as suggested there](https://github.com/stoatchat/self-hosted/issues/176#issuecomment-2668227771). This is a **reference implementation** — monitoring, GitOps, and security policies are left to operators. Architecture adapted from [lasuite-platform](https://github.com/baptisterajaut/lasuite-platform) (La Suite Numérique).
 
 ## Architecture
@@ -301,9 +303,9 @@ verification is skipped and accounts are immediately usable.
 | RabbitMQ | stoatchat-app (official image) | `stoatchat-rabbitmq` | Message broker |
 | MinIO | minio/minio | `stoatchat-minio` | S3-compatible object storage |
 | LiveKit | livekit/livekit-server | `stoatchat-livekit` | WebRTC server (optional) |
-| cert-manager | jetstack/cert-manager | `stoatchat-cert-manager` | TLS certificate management |
-| HAProxy | haproxytech/kubernetes-ingress | `stoatchat-ingress` | Ingress controller |
-| Reflector | emberstack/reflector | `stoatchat-reflector` | Cross-namespace secret replication |
+| cert-manager | jetstack/cert-manager | `cert-manager` | TLS certificate management |
+| HAProxy | haproxytech/kubernetes-ingress | `haproxy-controller` | Ingress controller |
+| Reflector | emberstack/reflector | `reflector` | Cross-namespace secret replication |
 
 All Stoatchat application services (api, events, file-server, etc.) deploy into
 the `stoatchat` namespace using the generic `helm/stoatchat-app` chart.
@@ -317,7 +319,7 @@ The CA certificate is exported to `stoatchat-ca.pem` by `init.sh`. You can also
 extract it manually:
 
 ```bash
-kubectl get secret stoatchat-ca-secret -n stoatchat-cert-manager \
+kubectl get secret stoatchat-ca-secret -n cert-manager \
   -o jsonpath='{.data.tls\.crt}' | base64 -d > stoatchat-ca.pem
 ```
 
