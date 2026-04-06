@@ -1,7 +1,7 @@
 # Stoatchat image tags (from ghcr.io/stoatchat/*)
 # All backend images share the same monorepo tag by default.
 # Override individual services only when needed.
-stoatchatImageTag: "v0.11.5"
+stoatchatImageTag: "v0.12.0"
 
 # Per-service overrides (leave empty to use stoatchatImageTag)
 stoatchatImageOverrides: {}
